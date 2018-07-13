@@ -3,14 +3,23 @@ import l293d.driver as l293d
 import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BOARD)
+# Drive Motor
+MotorA1 = 13
+MotorA2 = 11
+MotorA3 = 15
 
-Motor1 = 13
-Motor2 = 11
-Motor3 = 15
+# Steering Motor
+MotorB1 = 16
+MotorB2 = 18
+MotorB3 = 22
 
-GPIO.setup(Motor1, GPIO.OUT)
-GPIO.setup(Motor2, GPIO.OUT)
-GPIO.setup(Motor3, GPIO.OUT)
+GPIO.setup(MotorA1, GPIO.OUT)
+GPIO.setup(MotorA2, GPIO.OUT)
+GPIO.setup(MotorA3, GPIO.OUT)
+
+GPIO.setup(MotorB1, GPIO.OUT)
+GPIO.setup(MotorB2, GPIO.OUT)
+GPIO.setup(MotorB3, GPIO.OUT)
 
 keepGoing = True
 
@@ -18,25 +27,33 @@ while keepGoing:
 
     def press_down(key):
         if key == Key.up:
-            GPIO.output(Motor1, GPIO.LOW)
-            GPIO.output(Motor2, GPIO.HIGH)
-            GPIO.output(Motor3, GPIO.HIGH)
+            GPIO.output(MotorA1, GPIO.LOW)
+            GPIO.output(MotorA2, GPIO.HIGH)
+            GPIO.output(MotorA3, GPIO.HIGH)
         if key == Key.down:
-            GPIO.output(Motor1, GPIO.HIGH)
-            GPIO.output(Motor2, GPIO.LOW)
-            GPIO.output(Motor3, GPIO.HIGH)
-        # if key == key.left:
-
-        # if key == key.right:
+            GPIO.output(MotorA1, GPIO.HIGH)
+            GPIO.output(MotorA2, GPIO.LOW)
+            GPIO.output(MotorA3, GPIO.HIGH)
+        if key == key.left:
+            GPIO.output(MotorB1, GPIO.HIGH)
+            GPIO.output(MotorB2, GPIO.LOW)
+            GPIO.output(MotorB3, GPIO.HIGH)
+        if key == key.right:
+            GPIO.output(MotorB1, GPIO.LOW)
+            GPIO.output(MotorB2, GPIO.HIGH)
+            GPIO.output(MotorB3, GPIO.HIGH)
 
 
     def release(key):
         if key == Key.up:
-            GPIO.output(Motor3, GPIO.LOW)
+            GPIO.output(MotorA3, GPIO.LOW)
         if key == Key.down:
-            GPIO.output(Motor3, GPIO.LOW)
-        # if key == Key.left:
-        # if key == key.right:
+            GPIO.output(MotorA3, GPIO.LOW)
+        if key == Key.left:
+            GPIO.output(MotorB3, GPIO.LOW)
+        if key == key.right:
+            GPIO.output(MotorB3, GPIO.LOW)
+
         if key == Key.esc:
             keepGoing = False
             l293d.cleanup()
